@@ -1,3 +1,4 @@
+const NotFoundError = require("../errors/NotFoundError");
 const {Hero, SuperPower, HeroImage} = require("../models")
 
 module.exports.createOne = async (req, res, next) => {
@@ -43,7 +44,11 @@ module.exports.getOne = async (req, res, next) => {
                 model:SuperPower
             }],
         });
-        res.status(200).send({data: {hero}});
+        if (hero.length){   
+            res.status(200).send({data: {hero}});
+        } else {
+            throw new NotFoundError("Hero")
+        }
     } catch (error) {
         next(error)
     }
@@ -53,24 +58,24 @@ module.exports.updateOne = async (req, res, next) => {
     try {
         const {body, file, params:{heroId}, powers} = req;
         let hero = await Hero.findByPk(+heroId);
-        if (hero) {
-            if (body){
-                hero = await hero.update(body)
-            }
-            if (file) {
-                const image = HeroImage.create({imagePath: file.filename});
-                await hero.addHeroImage(image)
-            };
-    
-            if (powers) {
-                await hero.setSuperPowers(...powers);
-            }
-    
-            res.status(200).send({data: {hero}});
+        if (!hero) {
+            throw new NotFoundError("Hero")
         } 
-        else {
-            res.status(404).send("Not found")
+        if (body){
+            hero = await hero.update(body)
         }
+        if (file) {
+            const image = HeroImage.create({imagePath: file.filename});
+            await hero.setHeroImage(image)
+        };
+
+        if (powers) {
+            await hero.setSuperPowers();
+        }
+
+        res.status(200).send({data: {hero}});
+
+
     } catch (error) {
         next(error)
     }
@@ -84,7 +89,11 @@ module.exports.deleteOne = async (req, res, next) => {
                 id: +heroId
             }
         });
-        res.status(200).send({data: {row}});
+        if (row) {
+            res.status(200).send({data: {row}});
+        } else {
+            throw new NotFoundError("Hero")
+        }
     } catch (error) {
         next(error)
     }
