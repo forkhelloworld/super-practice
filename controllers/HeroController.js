@@ -9,9 +9,7 @@ module.exports.createOne = async (req, res, next) => {
             const image = await hero.createHeroImage({imagePath: file.filename})
         }
         if (powers) {
-            powers.forEach(async (power) => {
-                await hero.addSuperPower(power)
-            });
+            await hero.setSuperPowers(powers)
         }
         res.status(201).send({data:{hero}})
     } catch (error) {
@@ -70,7 +68,7 @@ module.exports.updateOne = async (req, res, next) => {
         };
 
         if (powers) {
-            await hero.setSuperPowers();
+            await hero.setSuperPowers(powers);
         }
 
         res.status(200).send({data: {hero}});
