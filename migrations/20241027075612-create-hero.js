@@ -11,7 +11,8 @@ module.exports = {
       },
       nickname: {
         type: Sequelize.STRING,
-        allowNull:true
+        allowNull:false,
+        unique:true
       },
       realName: {
         field:"real_name",

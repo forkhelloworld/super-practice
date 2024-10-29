@@ -18,7 +18,9 @@ module.exports = {
         references: {
           model: "heroes",
           key: "id"
-        }
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
       },
       powerId:{
         type:Sequelize.INTEGER,
@@ -28,9 +30,19 @@ module.exports = {
           model: "super_powers",
           key: "id"
         }
+      },
+      createdAt: {
+        field: "created_at",
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        field: "updated_at",
+        allowNull: false,
+        type: Sequelize.DATE
       }
      });
-     await queryInterface.addConstraint("heroes_to_powers", {
+     await queryInterface.addConstraint("heroes_to_superpowers", {
       fields:["hero_id","power_id"],
       type:"unique",
       name: "heroes_to_powers_unique"
