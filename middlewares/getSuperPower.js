@@ -16,8 +16,7 @@ module.exports.getSuperPower = async (req, res, next) => {
                     power = await SuperPower.create({name});
                 };
                 superPowers.push(...power)
-            }
-        console.log(superPowers);
+            };
         req.powers = superPowers;
         }
         next();
