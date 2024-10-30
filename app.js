@@ -1,6 +1,6 @@
-const express = require('express');
-const {apiRouter} = require('./routes/apiRouter');
-const {errorHandler} = require("./errorHandler");
+const express = require("express");
+const { apiRouter } = require("./routes/apiRouter");
+const { errorHandler } = require("./errorHandler");
 const bodyParser = express.json();
 
 const app = express();

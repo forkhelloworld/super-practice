@@ -1,43 +1,43 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('hero_images', {
+    await queryInterface.createTable("hero_images", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       heroId: {
         type: Sequelize.INTEGER,
-        field:"hero_id",
+        field: "hero_id",
         allowNull: true,
         references: {
           model: "heroes",
-          key:"id"
+          key: "id",
         },
         onDelete: "CASCADE",
-        onUpdate: "CASCADE"
+        onUpdate: "CASCADE",
       },
       imagePath: {
         field: "image_path",
         type: Sequelize.TEXT,
-        allowNull: true
+        allowNull: true,
       },
       createdAt: {
-        field:"created_at",
+        field: "created_at",
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
-        field:"updated_at",
+        field: "updated_at",
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('hero_images');
-  }
+    await queryInterface.dropTable("hero_images");
+  },
 };

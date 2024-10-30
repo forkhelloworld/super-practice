@@ -1,7 +1,7 @@
 const apiRouter = require("express").Router();
 
-const heroRouter = require('./superHero');
+const heroRouter = require("./superHero");
 
-apiRouter.use("/hero", heroRouter)
+apiRouter.use("/hero", heroRouter);
 
-module.exports.apiRouter = apiRouter
+module.exports.apiRouter = apiRouter;

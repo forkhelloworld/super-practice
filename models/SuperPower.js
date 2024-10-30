@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class SuperPower extends Model {
     /**
@@ -12,24 +10,27 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       SuperPower.belongsToMany(models.Hero, {
-        through:"heroes_to_superpowers",
-        foreignKey: "powerId"
-      })
+        through: "heroes_to_superpowers",
+        foreignKey: "powerId",
+      });
     }
   }
-  SuperPower.init({
-    name: {
-      type:DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        notEmpty:true
-      }
-    }
-  }, {
-    sequelize,
-    modelName: 'SuperPower',
-    tableName: "super_powers",
-    underscored:true
-  });
+  SuperPower.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          notEmpty: true,
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "SuperPower",
+      tableName: "super_powers",
+      underscored: true,
+    },
+  );
   return SuperPower;
 };

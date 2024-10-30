@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Hero extends Model {
     /**
@@ -12,39 +10,42 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Hero.hasMany(models.HeroImages, {
-        foreignKey:"heroId"
+        foreignKey: "heroId",
       });
       Hero.belongsToMany(models.SuperPower, {
-        through:"heroes_to_superpowers",
-        foreignKey: "heroId"
-      })
+        through: "heroes_to_superpowers",
+        foreignKey: "heroId",
+      });
     }
   }
-  Hero.init({
-    nickname: {
-      allowNull:false,
-      type:DataTypes.STRING,
-      validate:  {
-        notEmpty:true
-      }
+  Hero.init(
+    {
+      nickname: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: true,
+        },
+      },
+      realName: {
+        field: "real_name",
+        type: DataTypes.STRING,
+      },
+      originDescription: {
+        field: "origin_description",
+        type: DataTypes.TEXT,
+      },
+      catchPhrase: {
+        field: "catch_phrase",
+        type: DataTypes.STRING,
+      },
     },
-    realName: {
-      field: "real_name",
-      type:DataTypes.STRING
+    {
+      sequelize,
+      modelName: "Hero",
+      tableName: "heroes",
+      underscored: true,
     },
-    originDescription: {
-      field:"origin_description",
-      type:DataTypes.TEXT
-    },
-    catchPhrase: {
-      field: "catch_phrase",
-      type:DataTypes.STRING
-    }
-  }, {
-    sequelize,
-    modelName: 'Hero',
-    tableName: "heroes",
-    underscored:true
-  });
+  );
   return Hero;
 };
