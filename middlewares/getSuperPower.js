@@ -9,15 +9,15 @@ module.exports.getSuperPower = async (req, res, next) => {
       powers = powers.split(",");
       const superPowers = [];
       for (const name of powers) {
-        let power = await SuperPower.findAll({
+        let power = await SuperPower.findOne({
           where: {
             name,
           },
         });
         if (!power.length) {
-          power = [await SuperPower.create({ name })];
+          power = await SuperPower.create({ name });
         }
-        superPowers.push(...power);
+        superPowers.push(power);
       }
       req.powers = superPowers;
     }
